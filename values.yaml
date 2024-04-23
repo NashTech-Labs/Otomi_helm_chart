@@ -1,0 +1,21 @@
+cluster:
+  name: otomi <name of the otomi cluster>
+  provider: azure
+  domainSuffix: azure.example.com <domain_name>
+otomi:
+  hasExternalDNS: true
+dns:
+  domainFilters: 
+    - example.com
+  provider:
+    azure:
+      resourceGroup: $AZURE_DNS_ZONE_RESOURCE_GROUP
+      aadClientId: $DNS_SP_APP_ID
+      aadClientSecret: $DNS_SP_PASSWORD
+      tenantId: "$(az account show --query tenantId -o tsv)"
+      subscriptionId: "$(az account show --query id -o tsv)"
+apps:
+  cert-manager:
+    issuer: letsencrypt
+    stage: production   < for which stage you want to create>
+    email: admin@example.com <your email id>
